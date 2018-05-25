@@ -1,0 +1,45 @@
+{
+  "name": "react-phaser-renderer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name" : "Javier Fernandes",
+    "email" : "javier.fernandes@gmail.com",
+    "url": "https://github.com/javierfernandes"
+  },
+  "scripts": {
+    "test": "jest --watchAll",
+    "lint": "eslint ./src/**/*.js"
+  },
+  "dependencies": {
+    "fbjs": "^0.8.16",
+    "phaser": "^3.9.0",
+    "ramda": "^0.25.0",
+    "react-reconciler": "^0.11.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-function-bind": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "canvas": "^1.6.11",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^21.15.2",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-react": "^7.8.2",
+    "jest": "^23.0.0",
+    "jsdom": "^11.11.0",
+    "json-stringify-safe": "^5.0.1",
+    "react": "^16.4.0"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "jest": {
+    "setupFiles": ["<rootDir>/setupJest.js"]
+  }
+}
