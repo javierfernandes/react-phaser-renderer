@@ -1,7 +1,15 @@
 {
-  "presets": [
-    [ "env", { "modules": false } ],
-    "react"
-  ],
-  "plugins": ["transform-object-rest-spread", "transform-function-bind", "external-helpers"]
+  "env": {
+    "test": {
+      "presets": ["env", "react"],
+      "plugins": ["transform-object-rest-spread", "transform-function-bind"]
+    },
+    "build": {
+      "presets": [
+        "es2015-rollup",
+        "react"
+      ],
+      "plugins": ["transform-object-rest-spread", "transform-function-bind"]
+    }
+  }
 }
