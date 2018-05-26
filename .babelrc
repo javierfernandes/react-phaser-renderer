@@ -1,4 +1,7 @@
 {
-  "presets": ["env", "react"],
-  "plugins": ["transform-object-rest-spread", "transform-function-bind"]
+  "presets": [
+    [ "env", { "modules": false } ],
+    "react"
+  ],
+  "plugins": ["transform-object-rest-spread", "transform-function-bind", "external-helpers"]
 }

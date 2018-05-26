@@ -1,3 +1,7 @@
+build
+index.js
+*.png
+
 # Logs
 logs
 *.log
