@@ -16,6 +16,14 @@ describe('Renderer', () => {
     expect(render(<game />))
   })
 
+  it('should mount a game with a sprite', async () => {
+    expect(render(
+      <game>
+        <sprite x={100} y={100} name="miPicture" /> 
+      </game>
+    ))
+  })
+
   it.skip('save canvas to file', () => {
     var canvas = new global.Canvas(200, 200, "png")
     var g = canvas.getContext("2d")
