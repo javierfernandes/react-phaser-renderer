@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/javierfernandes/react-phaser-renderer.svg?style=svg)](https://circleci.com/gh/javierfernandes/react-phaser-renderer)
+
 # react-phaser-renderer
 
 React Renderer to combine React + Phaser for declarative game development

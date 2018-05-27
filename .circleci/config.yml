@@ -33,6 +33,7 @@ jobs:
       - store_artifacts:
           path: reports
 
+      - run: yarn codecov
 
       - run: yarn build
 
