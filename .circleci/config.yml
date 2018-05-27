@@ -22,7 +22,17 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      - run: yarn test-ci
+      - run:
+          name: test
+          command: yarn test-ci
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: reports
+
 
       - run: yarn build
 

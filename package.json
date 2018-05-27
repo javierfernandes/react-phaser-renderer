@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "BABEL_ENV=test jest --watchAll",
-    "test-ci": "BABEL_ENV=test jest --coverage",
+    "test-ci": "BABEL_ENV=test jest --runInBand --coverage --ci --testResultsProcessor=\"jest-junit\"",
     "lint": "eslint ./src/**/*.js",
     "build": "BABEL_ENV=build rollup -c"
   },
@@ -37,6 +37,7 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-react": "^7.8.2",
     "jest": "^23.0.0",
+    "jest-junit": "^4.0.0",
     "jsdom": "^11.11.0",
     "json-stringify-safe": "^5.0.1",
     "react": "^16.4.0",
