@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "BABEL_ENV=test jest --watchAll",
+    "test-ci": "BABEL_ENV=test jest --coverage",
     "lint": "eslint ./src/**/*.js",
     "build": "BABEL_ENV=build rollup -c"
   },
@@ -23,6 +24,7 @@
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-function-bind": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",

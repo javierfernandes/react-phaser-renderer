@@ -2,14 +2,14 @@
   "env": {
     "test": {
       "presets": ["env", "react"],
-      "plugins": ["transform-object-rest-spread", "transform-function-bind"]
+      "plugins": ["transform-object-rest-spread", "transform-function-bind", "transform-class-properties"]
     },
     "build": {
       "presets": [
         "es2015-rollup",
         "react"
       ],
-      "plugins": ["transform-object-rest-spread", "transform-function-bind"]
+      "plugins": ["transform-object-rest-spread", "transform-function-bind", "transform-class-properties"]
     }
   }
 }
