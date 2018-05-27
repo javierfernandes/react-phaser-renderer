@@ -11,9 +11,15 @@ export default class AbstractComponent {
     this.children = []
   }
 
+  // react lifecycle
+
   init() {}
   appendChild(child) { this.children.push(child) }
   setParent() { }
+
+  updateProperties(/* oldProps, newProps */) {
+    return true // what does it means ?
+  }
 
   // phaser components impl
 

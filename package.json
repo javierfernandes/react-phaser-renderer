@@ -44,15 +44,17 @@
     "react": "^16.4.0",
     "rollup": "^0.59.3",
     "rollup-plugin-babel": "^3.0.4",
-    "rollup-plugin-eslint": "^4.0.0"
+    "rollup-plugin-eslint": "^4.0.0",
+    "xhr-mock": "^2.3.2"
   },
   "engines": {
     "node": ">=4.0.0"
   },
   "jest": {
     "setupFiles": [
-      "<rootDir>/setupJest.js"
+      "<rootDir>/setupTest.js"
     ],
+    "setupTestFrameworkScriptFile": "<rootDir>/setupFramework.js",
     "coverageDirectory": "./coverage"
   }
 }

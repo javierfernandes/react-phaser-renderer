@@ -1,6 +1,6 @@
 import Reconciler from 'react-reconciler'
 import emptyObject from 'fbjs/lib/emptyObject'
-import { identity, always, T, F } from 'ramda'
+import { identity, always, F } from 'ramda'
 import logging from './utils/logger'
 
 import createElement from './utils/createElement'
@@ -34,7 +34,9 @@ export default Reconciler(log({
   getPublicInstance: identity,
   prepareForCommit: NOOP,
   // (element, type, oldProps, newProps) => Boolean,
-  prepareUpdate: T,
+  prepareUpdate: (element, type, oldProps, newProps) => {
+    return element.updateProperties(oldProps, newProps)
+  },
   resetAfterCommit: NOOP,
   resetTextContent: NOOP,
   // You can use this 'rootInstance' to pass data from the roots.

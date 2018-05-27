@@ -2,10 +2,9 @@ import AbstractComponent from './AbstractComponent'
 
 export default class Image extends AbstractComponent {
 
-  constructor(props, root) {
+  constructor(props) {
     super()
     // probably not needed
-    this.root = root
     this.props = props
   }
 
@@ -15,13 +14,45 @@ export default class Image extends AbstractComponent {
   }
 
   onCreate(scene) {
-    const { x = 0, y = 0, name, ...others } = this.props
+    const { x = 0, y = 0, name, onClick, ...others } = this.props
     this.phaserObject = scene.add.image(x, y, name)
     
+    if (onClick) {
+      console.log('Settting onClick handler on image object')
+      this.phaserObject.setInteractive()
+      this.phaserObject.on('pointerdown', () => {
+        console.log('GOT POINTERDOWN EVENT !')
+        onClick()
+      })
+    }
+
     // forward non-constructor-args props
-    Object.entries(others).forEach(([key, value]) => {
+    this._forwardProperties(others)
+  }
+  
+  _forwardProperties(props) {
+    Object.entries(props).forEach(([key, value]) => {
       this.phaserObject[key] = value
     })
+  }
+
+  // react update
+
+  updateProperties(oldProps, newProps) {
+    if (!this.phaserObject) {
+      console.error('phaser object still not created!!')
+      return
+    }
+
+    // TODO: handle nullated props !
+
+    Object.entries(newProps)
+      .forEach(([key, value]) => {
+        if (value !== oldProps[key]) {
+          this.phaserObject[key] = value
+        }
+      })
+    return super.updateProperties(oldProps, newProps)
   }
   
 }
