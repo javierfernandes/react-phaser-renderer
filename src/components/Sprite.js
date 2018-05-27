@@ -1,7 +1,9 @@
+import AbstractComponent from './AbstractComponent'
 
-export default class Sprite {
+export default class Sprite extends AbstractComponent {
 
   constructor(props, root) {
+    super()
     // probably not needed
     this.root = root
     this.props = props
@@ -9,7 +11,6 @@ export default class Sprite {
 
   onPreload(game) {
     const { name } = this.props
-
     game.load.image(name, `assets/${name}.png`)
   }
 
@@ -17,10 +18,5 @@ export default class Sprite {
     const { x = 0, y = 0, name, frame } = this.props
     scene.add.sprite(x, y, name, frame)
   }
-
-  init() { }
-  appendChild() { }
-  setParent() { }
-
   
 }

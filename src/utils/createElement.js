@@ -1,9 +1,11 @@
-import { pipe, map, mergeAll, merge, construct, values, keys } from 'ramda'
+import { pipe, map, mergeAll, construct, values, keys } from 'ramda'
 import Types from '../types'
 import * as componentConstructors from '../components/index'
 
 const createElement = (type, props, root) => factory(type)(props, root)
-const factory = type => factoryByType[type] || factoryByType.default
+const factory = type => factoryByType[type] || notFound(type)
+
+const notFound = type => { throw new Error(`Unknown tag type: ${type}`) }
 
 const constructorForType = type => {
   const fnKey = keys(componentConstructors).find(c => c.toLowerCase() === type.toLowerCase())
@@ -15,8 +17,7 @@ export const factoryByType = pipe(
   map(type => ({
     [type]: constructorForType(type)
   })),
-  mergeAll,
-  merge({ default: () => undefined })
+  mergeAll
 )(Types)
 
 export default createElement

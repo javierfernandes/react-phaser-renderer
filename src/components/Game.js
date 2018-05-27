@@ -1,12 +1,14 @@
 import Phaser, { Game as PGame, Scene } from 'phaser'
+import AbstractComponent from './AbstractComponent'
 
-export default class Game {
+export default class Game extends AbstractComponent {
 
   constructor(props, root) {
+    super()
     this.root = root
     this.parentDOM = root.root
-    this.children = []
   
+    // TODO: remove hardcoded default values
     const { width = 640, height = 360 } = props
 
     // TODO: move to a <scene> component
@@ -22,20 +24,8 @@ export default class Game {
     })
   }
 
-  onPreload(scene) {
-    this.children.forEach(c => c.onPreload(scene))
-  }
-  onCreate(scene) {
-    this.children.forEach(c => c.onCreate(scene))
-  }
-  onUpdate() {
-  }
-
-  init() { }
-
-  appendChild(child) {
-    this.children.push(child)
-  }
-  setParent() { }
+  onPreload = this._callOnChildren('onPreload')
+  onCreate = this._callOnChildren('onCreate')
+  onUpdate = this._callOnChildren('onUpdate')
 
 }

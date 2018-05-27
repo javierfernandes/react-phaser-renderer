@@ -1,14 +1,14 @@
 import Reconciler from 'react-reconciler'
 import emptyObject from 'fbjs/lib/emptyObject'
-import { identity, always } from 'ramda'
-// import logging from './utils/logger'
+import { identity, always, T, F } from 'ramda'
+import logging from './utils/logger'
 
 import createElement from './utils/createElement'
 
 const NOOP = () => {}
 
-// const log = logging
-const log = identity
+const log = logging
+// const log = identity
 
 export default Reconciler(log({
   
@@ -23,7 +23,8 @@ export default Reconciler(log({
 
   createInstance: createElement,
 
-  createTextInstance: (text, rootContainerInstance, internalInstanceHandle) => text,
+  // (text, rootContainerInstance, internalInstanceHandle) => text
+  createTextInstance: identity,
 
   finalizeInitialChildren: (element, type, props) => {
     element.init(props)
@@ -31,20 +32,18 @@ export default Reconciler(log({
   },
 
   getPublicInstance: identity,
-
   prepareForCommit: NOOP,
-
-  prepareUpdate: (element, type, oldProps, newProps) => true,
-
+  // (element, type, oldProps, newProps) => Boolean,
+  prepareUpdate: T,
   resetAfterCommit: NOOP,
-  resetTextContent(element) { },
-
+  resetTextContent: NOOP,
   // You can use this 'rootInstance' to pass data from the roots.
-  getRootHostContext(rootInstance) { },
+  getRootHostContext: NOOP,
 
   getChildHostContext: always(emptyObject),
 
-  shouldSetTextContent: (type, props) => false,
+  // (type, props) => Boolean
+  shouldSetTextContent: F,
 
   now: ::performance.now,
 
@@ -75,18 +74,18 @@ export default Reconciler(log({
       parentInstance.removeChild(child)
     },
 
-    insertBefore: (parentInstance, child, beforeChild) => {
-    },
-
-    commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-    },
-
-    commitMount(instance, updatePayload, type, oldProps, newProps) {
-    },
-
     commitTextUpdate(textInstance, oldText, newText) {
       textInstance.children = newText
-    }
+    },
+
+    // (parentInstance, child, beforeChild) => 
+    insertBefore: NOOP,
+
+    // (instance, updatePayload, type, oldProps, newProps) => 
+    commitUpdate: NOOP,
+
+    // (instance, updatePayload, type, oldProps, newProps) => 
+    commitMount: NOOP,
 
   }
 

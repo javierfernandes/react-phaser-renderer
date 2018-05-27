@@ -3,5 +3,6 @@ export default {
   ROOT: 'root',
   GAME: 'game',
   SPRITE: 'sprite',
-  TEXT: 'text'
+  IMAGE: 'image'
+  // TEXT: 'text'
 }

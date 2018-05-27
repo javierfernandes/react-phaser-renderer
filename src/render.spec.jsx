@@ -9,17 +9,25 @@ describe('Renderer', () => {
     expect(Renderer.render).toBeTruthy()
   })
 
-  it('should mount a simple empty game', async () => {
+  it('should mount a simple empty <game />', async () => {
     // expect().toEqual({
     //   root: <div />
     // })
     expect(render(<game />))
   })
 
-  it('should mount a game with a sprite', async () => {
+  it('should mount a <game> with a <sprite>', async () => {
     expect(render(
       <game>
         <sprite x={100} y={100} name="miPicture" /> 
+      </game>
+    ))
+  })
+
+  it.only('should mount a game with an <image>', async () => {
+    expect(render(
+      <game>
+        <image x={100} y={100} name="miPicture" /> 
       </game>
     ))
   })
