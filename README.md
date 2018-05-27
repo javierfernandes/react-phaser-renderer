@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/javierfernandes/react-phaser-renderer.svg?style=svg)](https://circleci.com/gh/javierfernandes/react-phaser-renderer)
+[![codecov](https://codecov.io/gh/javierfernandes/react-phaser-renderer/branch/master/graph/badge.svg)](https://codecov.io/gh/javierfernandes/react-phaser-renderer)
 
 # react-phaser-renderer
 
