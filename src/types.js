@@ -2,5 +2,6 @@
 export default {
   ROOT: 'root',
   GAME: 'game',
-  SPRITE: 'sprite'
+  SPRITE: 'sprite',
+  TEXT: 'text'
 }

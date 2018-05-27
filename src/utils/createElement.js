@@ -1,15 +1,22 @@
+import { pipe, map, mergeAll, merge, construct, values, keys } from 'ramda'
 import Types from '../types'
-import { Root, Game, Sprite } from '../components/index'
+import * as componentConstructors from '../components/index'
 
 const createElement = (type, props, root) => factory(type)(props, root)
 const factory = type => factoryByType[type] || factoryByType.default
 
-const factoryByType = {
-  [Types.ROOT]: (props, root) => new Root(props, root),
-  // TODO: use ramda to avoid the arrow
-  [Types.GAME]: (props, root) => new Game(props, root),
-  [Types.SPRITE]: (props, root) => new Sprite(props, root),
-  default: () => undefined,
+const constructorForType = type => {
+  const fnKey = keys(componentConstructors).find(c => c.toLowerCase() === type.toLowerCase())
+  return fnKey && construct(componentConstructors[fnKey])
 }
+
+export const factoryByType = pipe(
+  values,
+  map(type => ({
+    [type]: constructorForType(type)
+  })),
+  mergeAll,
+  merge({ default: () => undefined })
+)(Types)
 
 export default createElement
