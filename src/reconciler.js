@@ -1,14 +1,14 @@
 import Reconciler from 'react-reconciler'
 import emptyObject from 'fbjs/lib/emptyObject'
-import { identity, always, F } from 'ramda'
-import logging from './utils/logger'
+import { identity, always, T, F } from 'ramda'
+// import logging from './utils/logger'
 
 import createElement from './utils/createElement'
 
 const NOOP = () => {}
 
-const log = logging
-// const log = identity
+// const log = logging
+const log = identity
 
 export default Reconciler(log({
   
@@ -34,9 +34,7 @@ export default Reconciler(log({
   getPublicInstance: identity,
   prepareForCommit: NOOP,
   // (element, type, oldProps, newProps) => Boolean,
-  prepareUpdate: (element, type, oldProps, newProps) => {
-    return element.updateProperties(oldProps, newProps)
-  },
+  prepareUpdate: T,
   resetAfterCommit: NOOP,
   resetTextContent: NOOP,
   // You can use this 'rootInstance' to pass data from the roots.
@@ -83,8 +81,9 @@ export default Reconciler(log({
     // (parentInstance, child, beforeChild) => 
     insertBefore: NOOP,
 
-    // (instance, updatePayload, type, oldProps, newProps) => 
-    commitUpdate: NOOP,
+    commitUpdate: (instace, instance, updatePayload, type, oldProps, newProps) => {
+      instance.updateProperties(oldProps, newProps)
+    },
 
     // (instance, updatePayload, type, oldProps, newProps) => 
     commitMount: NOOP,
