@@ -11,6 +11,8 @@ const NOOP = () => {}
 const log = identity
 
 export default Reconciler(log({
+  supportsMutation: true,
+  isPrimaryRenderer: true,
   
   appendInitialChild(parentInstance, child) {
     if (parentInstance.appendChild) {
@@ -34,12 +36,13 @@ export default Reconciler(log({
   getPublicInstance: identity,
   prepareForCommit: NOOP,
   // (element, type, oldProps, newProps) => Boolean,
-  prepareUpdate: T,
+  prepareUpdate: (element, type, oldProps, newProps) => {
+    return element.prepareUpdate(oldProps, newProps)
+  },
   resetAfterCommit: NOOP,
   resetTextContent: NOOP,
   // You can use this 'rootInstance' to pass data from the roots.
-  getRootHostContext: NOOP,
-
+  getRootHostContext: always(emptyObject),
   getChildHostContext: always(emptyObject),
 
   // (type, props) => Boolean
@@ -47,47 +50,40 @@ export default Reconciler(log({
 
   now: ::performance.now,
 
-  mutation: {
-    appendChild(parentInstance, child) {
-      if (parentInstance.appendChild) {
-        parentInstance.appendChild(child)
-        child.setParent(parentInstance)
-      } else {
-        parentInstance.document = child
-      }
-    },
+  appendChild(parentInstance, child) {
+    if (parentInstance.appendChild) {
+      parentInstance.appendChild(child)
+      child.setParent(parentInstance)
+    } else {
+      parentInstance.document = child
+    }
+  },
 
-    appendChildToContainer(parentInstance, child) {
-      if (parentInstance.appendChild) {
-        parentInstance.appendChild(child)
-        child.setParent(parentInstance)
-      } else {
-        parentInstance.document = child
-      }
-    },
+  appendChildToContainer(parentInstance, child) {
+    if (parentInstance.appendChild) {
+      parentInstance.appendChild(child)
+      child.setParent(parentInstance)
+    } else {
+      parentInstance.document = child
+    }
+  },
 
-    removeChild(parentInstance, child) {
-      parentInstance.removeChild(child)
-    },
+  removeChild(parentInstance, child) { parentInstance.removeChild(child) },
 
-    removeChildFromContainer(parentInstance, child) {
-      parentInstance.removeChild(child)
-    },
+  removeChildFromContainer(parentInstance, child) { parentInstance.removeChild(child) },
 
-    commitTextUpdate(textInstance, oldText, newText) {
-      textInstance.children = newText
-    },
+  commitTextUpdate(textInstance, oldText, newText) {
+    textInstance.children = newText
+  },
 
-    // (parentInstance, child, beforeChild) => 
-    insertBefore: NOOP,
+  // (parentInstance, child, beforeChild) => 
+  insertBefore: NOOP,
 
-    commitUpdate: (instace, instance, updatePayload, type, oldProps, newProps) => {
-      instance.updateProperties(oldProps, newProps)
-    },
+  commitUpdate: (instance, updatePayload) => {
+    instance.updateProperties(updatePayload)
+  },
 
-    // (instance, updatePayload, type, oldProps, newProps) => 
-    commitMount: NOOP,
+  // (instance, updatePayload, type, oldProps, newProps) => 
+  commitMount: NOOP,
 
-  }
-
-}))
+}, 'Reconciler'))

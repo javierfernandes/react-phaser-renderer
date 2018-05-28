@@ -17,13 +17,10 @@ export default class Image extends AbstractComponent {
     const { x = 0, y = 0, name, onClick, ...others } = this.props
     this.phaserObject = scene.add.image(x, y, name)
     
+    // TODO: support this in updateProperties
     if (onClick) {
-      console.log('Settting onClick handler on image object')
       this.phaserObject.setInteractive()
-      this.phaserObject.on('pointerdown', () => {
-        console.log('GOT POINTERDOWN EVENT !')
-        onClick()
-      })
+      this.phaserObject.on('pointerdown', onClick)
     }
 
     // forward non-constructor-args props
@@ -38,21 +35,35 @@ export default class Image extends AbstractComponent {
 
   // react update
 
-  updateProperties(oldProps, newProps) {
+  prepareUpdate(oldProps, newProps) {
     if (!this.phaserObject) {
+      // OMG: ? how can we handle components still not created in phaser ??
       console.error('phaser object still not created!!')
-      return
+      return true
     }
 
     // TODO: handle nullated props !
+    return Object.entries(newProps)
+    .reduce((acc, prop) => {
+      const [key, value] = prop 
+      if (value !== oldProps[key]) {
+        acc.push(prop)
+      }
+      return acc
+    }, [])
+  }
 
-    Object.entries(newProps)
-      .forEach(([key, value]) => {
-        if (value !== oldProps[key]) {
-          this.phaserObject[key] = value
-        }
-      })
-    return super.updateProperties(oldProps, newProps)
+
+  updateProperties(changes) {
+    if (!this.phaserObject) {
+      console.error('phaser object still not created!!')
+      return true
+    }
+    // TODO: extract EMPTY_ARRAY
+    (changes || []).forEach(([key, value]) => {
+      this.phaserObject[key] = value
+    }) 
+    return true
   }
   
 }

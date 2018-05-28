@@ -1,5 +1,6 @@
 import { invoker } from 'ramda'
 
+const EMPTY_ARRAY = Object.freeze([])
 /**
  * base class for components.
  * Avoids duplicating code
@@ -15,9 +16,14 @@ export default class AbstractComponent {
 
   init() {}
   appendChild(child) { this.children.push(child) }
+  // TODO
+  removeChild() {}
   setParent() { }
 
-  updateProperties(/* oldProps, newProps */) {
+  prepareUpdate(/* oldProps, newProps */) { return EMPTY_ARRAY }
+
+  // TODO: rename to commit
+  updateProperties(updates) {
     return true // what does it means ?
   }
 

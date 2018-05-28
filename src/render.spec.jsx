@@ -27,7 +27,7 @@ describe('Renderer', () => {
     ))
   })
 
-  it.only('should mount a game with an <image>', async () => {
+  it('should mount a game with an <image>', async () => {
     mockImage('myIcon')
     expect(render(
       <game>

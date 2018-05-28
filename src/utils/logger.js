@@ -1,15 +1,23 @@
 import { mapObjIndexed } from 'ramda'
 import stringify from 'json-stringify-safe'
 
-/* eslint no-console: 0 */
-const wrapMethod = (m, name) => (...args) => {
+const safeToString = e => {
   try {
-    console.log(`Calling ${name}(${stringify(args)})`)
+    return stringify(e)
+  } catch (err) {
+    return `<< ERROR SHOWING PARAM: ${e} >>`
+  }
+}
+
+/* eslint no-console: 0 */
+const wrapMethod = (preffix = '') => (m, name) => (...args) => {
+  try {
+    console.log(`Calling ${preffix}.${name}(${args.map(safeToString).join(',')})`)
   } catch (e) {
-    console.log(`Calling ${name}(<< CANNOT SHOW PARAMS :(  FAILED TO STRINGIFY >>)`)
+    console.log(`Calling ${preffix}.${name}(<< CANNOT SHOW PARAMS :(  FAILED TO STRINGIFY >>)`)
   }
   return m(...args)
 }
-export const log = mapObjIndexed(wrapMethod)
+export const log = (obj, preffix) => mapObjIndexed(wrapMethod(preffix))(obj)
 
 export default log 
