@@ -36,6 +36,27 @@ describe('Renderer', () => {
     ))
   })
 
+  it('should destroy the game when unmounting', async () => {
+    class MyComponent extends React.Component {
+      state = { playing: true }
+      componentDidMount = () => { setTimeout(() => this.setState({ playing: false }), 200) }
+      componentDidUpdate = (prevProps, prevState) => {
+        if (!this.state.playing && prevState.playing) {
+          this.props.gameFinished(this.game)
+        }
+      }
+      render = () => this.state.playing ? <game ref={game => { if (game) this.game = game }} /> : 'Not running'
+    }
+    await new Promise(resolve => {
+      expect(render(
+        <MyComponent gameFinished={game => {          
+          expect(game.phaserObject.isRunning).toBeFalsy()
+          resolve()
+        }} />
+      ))
+    })
+  })
+
   it.skip('save canvas to file', () => {
     var canvas = new global.Canvas(200, 200, "png")
     var g = canvas.getContext("2d")

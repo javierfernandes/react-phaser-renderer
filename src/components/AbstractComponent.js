@@ -16,21 +16,23 @@ export default class AbstractComponent {
   // react lifecycle
 
   init() {}
+  destroy() {}
+
   appendChild(child) { this.children.push(child) }
-  // TODO
   removeChild() {}
   setParent() { }
+  
 
   prepareUpdate(/* oldProps, newProps */) { return EMPTY_ARRAY }
 
   // TODO: rename to commit
-  commitUpdate(updates) {
+  commitUpdate(/* updates */) {
     return true // what does it means ?
   }
 
   // phaser components impl
 
-  _callOnChildren = (methodName) => (...args) => 
+  _callOnChildren = methodName => (...args) => 
     this.children.forEach(invoker(args.length, methodName)(...args))
 
 }

@@ -1,14 +1,14 @@
 import Reconciler from 'react-reconciler'
 import emptyObject from 'fbjs/lib/emptyObject'
-import { identity, always, T, F } from 'ramda'
-// import logging from './utils/logger'
+import { identity, always, F } from 'ramda'
+import logging from './utils/logger'
 
 import createElement from './utils/createElement'
 
 const NOOP = () => {}
 
-// const log = logging
-const log = identity
+const log = logging
+// const log = identity
 
 export default Reconciler(log({
   supportsMutation: true,
@@ -16,7 +16,6 @@ export default Reconciler(log({
   
   createInstance: createElement,
 
-  // (text, rootContainerInstance, internalInstanceHandle) => text
   createTextInstance: identity,
 
   finalizeInitialChildren: (element, type, props) => {
@@ -44,7 +43,7 @@ export default Reconciler(log({
   appendInitialChild(parentInstance, child) {
     if (parentInstance.appendChild) {
       parentInstance.appendChild(child)
-      child.setParent(parentInstance)
+      child.setParent && child.setParent(parentInstance)
     } else {
       parentInstance.document = child
     }
@@ -53,7 +52,7 @@ export default Reconciler(log({
   appendChild(parentInstance, child) {
     if (parentInstance.appendChild) {
       parentInstance.appendChild(child)
-      child.setParent(parentInstance)
+      child.setParent && child.setParent(parentInstance)
     } else {
       parentInstance.document = child
     }
@@ -62,7 +61,7 @@ export default Reconciler(log({
   appendChildToContainer(parentInstance, child) {
     if (parentInstance.appendChild) {
       parentInstance.appendChild(child)
-      child.setParent(parentInstance)
+      child.setParent && child.setParent(parentInstance)
     } else {
       parentInstance.document = child
     }
@@ -70,7 +69,10 @@ export default Reconciler(log({
 
   removeChild(parentInstance, child) { parentInstance.removeChild(child) },
 
-  removeChildFromContainer(parentInstance, child) { parentInstance.removeChild(child) },
+  removeChildFromContainer(parentInstance, child) {
+    parentInstance.removeChild(child)
+    child.destroy && child.destroy()
+  },
 
   commitTextUpdate(textInstance, oldText, newText) {
     textInstance.children = newText
@@ -83,5 +85,8 @@ export default Reconciler(log({
   },
 
   commitMount: NOOP,
+
+  scheduleAnimationCallback: window.requestAnimationFrame,
+  scheduleDeferredCallback: window.requestIdleCallback,
 
 }, 'Reconciler'))

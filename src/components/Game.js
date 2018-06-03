@@ -16,7 +16,7 @@ export default class Game extends AbstractComponent {
     this.gameScene.preload = () => this.onPreload(this.gameScene)
     this.gameScene.create = () => this.onCreate(this.gameScene)
 
-    this.game = new PGame({
+    this.phaserObject = new PGame({
       type: Phaser.AUTO,
       width,
       height,
