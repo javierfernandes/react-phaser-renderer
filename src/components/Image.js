@@ -1,4 +1,4 @@
-import AbstractComponent from './AbstractComponent'
+import AbstractComponent, { EMPTY_ARRAY } from './AbstractComponent'
 
 export default class Image extends AbstractComponent {
 
@@ -17,7 +17,7 @@ export default class Image extends AbstractComponent {
     const { x = 0, y = 0, name, onClick, ...others } = this.props
     this.phaserObject = scene.add.image(x, y, name)
     
-    // TODO: support this in updateProperties
+    // TODO: support this in commitUpdate
     if (onClick) {
       this.phaserObject.setInteractive()
       this.phaserObject.on('pointerdown', onClick)
@@ -54,13 +54,12 @@ export default class Image extends AbstractComponent {
   }
 
 
-  updateProperties(changes) {
+  commitUpdate(changes) {
     if (!this.phaserObject) {
       console.error('phaser object still not created!!')
       return true
     }
-    // TODO: extract EMPTY_ARRAY
-    (changes || []).forEach(([key, value]) => {
+    (changes || EMPTY_ARRAY).forEach(([key, value]) => {
       this.phaserObject[key] = value
     }) 
     return true

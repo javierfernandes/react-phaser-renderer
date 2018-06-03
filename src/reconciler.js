@@ -14,15 +14,6 @@ export default Reconciler(log({
   supportsMutation: true,
   isPrimaryRenderer: true,
   
-  appendInitialChild(parentInstance, child) {
-    if (parentInstance.appendChild) {
-      parentInstance.appendChild(child)
-      child.setParent(parentInstance)
-    } else {
-      parentInstance.document = child
-    }
-  },
-
   createInstance: createElement,
 
   // (text, rootContainerInstance, internalInstanceHandle) => text
@@ -35,20 +26,29 @@ export default Reconciler(log({
 
   getPublicInstance: identity,
   prepareForCommit: NOOP,
-  // (element, type, oldProps, newProps) => Boolean,
-  prepareUpdate: (element, type, oldProps, newProps) => {
-    return element.prepareUpdate(oldProps, newProps)
-  },
+  prepareUpdate: (element, type, oldProps, newProps) => 
+    element.prepareUpdate(oldProps, newProps),
+
   resetAfterCommit: NOOP,
   resetTextContent: NOOP,
-  // You can use this 'rootInstance' to pass data from the roots.
+
   getRootHostContext: always(emptyObject),
   getChildHostContext: always(emptyObject),
 
-  // (type, props) => Boolean
   shouldSetTextContent: F,
 
   now: ::performance.now,
+
+  // childs management
+
+  appendInitialChild(parentInstance, child) {
+    if (parentInstance.appendChild) {
+      parentInstance.appendChild(child)
+      child.setParent(parentInstance)
+    } else {
+      parentInstance.document = child
+    }
+  },
 
   appendChild(parentInstance, child) {
     if (parentInstance.appendChild) {
@@ -76,14 +76,12 @@ export default Reconciler(log({
     textInstance.children = newText
   },
 
-  // (parentInstance, child, beforeChild) => 
   insertBefore: NOOP,
 
   commitUpdate: (instance, updatePayload) => {
-    instance.updateProperties(updatePayload)
+    instance.commitUpdate(updatePayload)
   },
 
-  // (instance, updatePayload, type, oldProps, newProps) => 
   commitMount: NOOP,
 
 }, 'Reconciler'))

@@ -29,12 +29,12 @@ describe('Components / Image', () => {
     ])
   })
 
-  it('updateProperties() should update a property on the phaser object (ie x)', async () => {
+  it('commitUpdate() should update a property on the phaser object (ie x)', async () => {
     mockImage('myIcon')
     const image = new Image({ name: 'myIcon', x: 100, y: 100 }, {})
     await mount(image)
 
-    image.updateProperties([['x', 200]])
+    image.commitUpdate([['x', 200]])
     expect(image.phaserObject.x).toEqual(200)
   })
 

@@ -1,6 +1,7 @@
 import { invoker } from 'ramda'
 
-const EMPTY_ARRAY = Object.freeze([])
+export const EMPTY_ARRAY = Object.freeze([])
+
 /**
  * base class for components.
  * Avoids duplicating code
@@ -23,7 +24,7 @@ export default class AbstractComponent {
   prepareUpdate(/* oldProps, newProps */) { return EMPTY_ARRAY }
 
   // TODO: rename to commit
-  updateProperties(updates) {
+  commitUpdate(updates) {
     return true // what does it means ?
   }
 
