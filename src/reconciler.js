@@ -89,4 +89,4 @@ export default Reconciler(log({
   scheduleAnimationCallback: window.requestAnimationFrame,
   scheduleDeferredCallback: window.requestIdleCallback,
 
-}, 'Reconciler'))
+}, 'Reconciler', { ignore: ['now'] }))

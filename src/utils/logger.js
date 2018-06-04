@@ -1,4 +1,4 @@
-import { mapObjIndexed } from 'ramda'
+import { mapObjIndexed, ifElse, identity } from 'ramda'
 import stringify from 'json-stringify-safe'
 
 const safeToString = e => {
@@ -18,6 +18,8 @@ const wrapMethod = (preffix = '') => (m, name) => (...args) => {
   }
   return m(...args)
 }
-export const log = (obj, preffix) => mapObjIndexed(wrapMethod(preffix))(obj)
+export const log = (obj, preffix, { ignore = [] } = { ignore: [] }) => mapObjIndexed(
+  ifElse((value, name) => !ignore.includes(name), wrapMethod(preffix), identity)
+)(obj)
 
 export default log 

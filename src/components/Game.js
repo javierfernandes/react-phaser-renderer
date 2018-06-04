@@ -1,4 +1,4 @@
-import Phaser, { Game as PGame, Scene } from 'phaser'
+import Phaser, { Game as PGame } from 'phaser'
 import AbstractComponent from './AbstractComponent'
 
 export default class Game extends AbstractComponent {
@@ -11,21 +11,11 @@ export default class Game extends AbstractComponent {
     // TODO: remove hardcoded default values
     const { width = 640, height = 360 } = props
 
-    // TODO: move to a <scene> component
-    this.gameScene = new Scene()
-    this.gameScene.preload = () => this.onPreload(this.gameScene)
-    this.gameScene.create = () => this.onCreate(this.gameScene)
-
     this.phaserObject = new PGame({
       type: Phaser.AUTO,
       width,
-      height,
-      scene: this.gameScene
+      height
     })
   }
-
-  onPreload = this._callOnChildren('onPreload')
-  onCreate = this._callOnChildren('onCreate')
-  onUpdate = this._callOnChildren('onUpdate')
 
 }
